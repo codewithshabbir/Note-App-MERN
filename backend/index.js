@@ -29,7 +29,7 @@ app.use(cors({
 // ✅ Optional: handle preflight
 app.options("*", cors());
 
-app.get("/", (req, res) => {
+app.get("/get", (req, res) => {
   res.json({ message: "Backend working!" });
 });
 
