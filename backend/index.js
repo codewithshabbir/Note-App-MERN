@@ -21,8 +21,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: "https://notepluss.vercel.app",
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }))
+
+// ✅ Optional: handle preflight
+app.options("*", cors());
+
+app.get("/", (req, res) => {
+  res.json({ message: "Backend working!" });
+});
 
 app.listen(3000, ()=>{
     console.log('Server is running on port 3000');
