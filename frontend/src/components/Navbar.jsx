@@ -14,7 +14,7 @@ const Navbar = ({userInfo}) => {
   const onLogout = async () => {
     try {
       dispatch(signInStart());
-      const res = await axios.get("http://localhost:3000/api/auth/signout",{
+      const res = await axios.get("https://noteplus-backend.vercel.app/api/auth/signout",{
         withCredentials: true,
       })
       if (res.data.success === false) {

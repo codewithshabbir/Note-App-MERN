@@ -26,7 +26,7 @@ const Home = () => {
   // Get all notes from API
   const getAllNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/note/all", {
+      const res = await axios.get("https://noteplus-backend.vercel.app/api/note/all", {
         withCredentials: true,
       });
 

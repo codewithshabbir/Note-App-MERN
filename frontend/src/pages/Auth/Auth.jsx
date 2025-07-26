@@ -23,7 +23,7 @@ const Auth = ({ mode }) => {
   const onFinish = async (value) => {
     if (formState == "Sign Up") {
       try {
-        const res = await axios.post("http://localhost:3000/api/auth/signup",
+        const res = await axios.post("https://noteplus-backend.vercel.app/api/auth/signup",
           {username: value.fullname, email: value.email, password: value.password},
           {withCredentials: true}
         );
@@ -44,7 +44,7 @@ const Auth = ({ mode }) => {
       try {
         dispatch(signInStart());
         const res = await axios.post(
-          "http://localhost:3000/api/auth/signin",
+          "https://noteplus-backend.vercel.app/api/auth/signin",
            {email: value.email, password: value.password},
           { withCredentials: true }
         );

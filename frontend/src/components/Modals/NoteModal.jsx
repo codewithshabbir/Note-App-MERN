@@ -21,7 +21,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
       
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/note/add",
+          "https://noteplus-backend.vercel.app/api/note/add",
           { title, content },
           { withCredentials: true }
         );
@@ -42,7 +42,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
 
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/note/edit/${noteData._id}`,
+          `https://noteplus-backend.vercel.app/api/note/edit/${noteData._id}`,
           { title, content },
           { withCredentials: true }
         );

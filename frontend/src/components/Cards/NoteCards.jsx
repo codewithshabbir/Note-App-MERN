@@ -29,7 +29,7 @@ const NoteCard = ({noteData, getAllNotes}) => {
     setNoteType("Edit")
   };
   const onDelete = async () => {
-    const res = await axios.delete(`http://localhost:3000/api/note/delete/${noteData._id}`,
+    const res = await axios.delete(`https://noteplus-backend.vercel.app/api/note/delete/${noteData._id}`,
       { withCredentials: true }
     );
 
