@@ -13,7 +13,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Auth = ({ mode }) => {
-  const formState = mode == "signin" ? "signup" : "signin";
+  const formState = mode == "signup" ? "signup" : "signin";
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [error, setError] = useState("")
