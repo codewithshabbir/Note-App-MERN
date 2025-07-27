@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import { toast, ToastContainer } from "react-toastify";
-import { data, NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import {
   signInFailure,
@@ -10,61 +9,72 @@ import {
   signInSuccess,
 } from "../../redux/user/userSlice";
 import axios from "axios";
+import { showError } from "../../utils/toast";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Auth = ({ mode }) => {
   const formState = mode == "signup" ? "signup" : "signin";
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const [error, setError] = useState("")
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onFinish = async (value) => {
+    setLoading(true);
     if (formState == "signup") {
       try {
-        const res = await axios.post(`${apiUrl}/auth/signup`,
-          {username: value.fullname, email: value.email, password: value.password},
-          {withCredentials: true}
+        const res = await axios.post(
+          `${apiUrl}/auth/signup`,
+          {
+            username: value.fullname,
+            email: value.email,
+            password: value.password,
+          },
+          {
+            withCredentials: true,
+            validateStatus: (status) => status >= 200 && status < 500,
+          }
         );
 
         if (res.data.success === false) {
-          setError(res.data);
-          return
+          return showError(res.data.message);
         }
-
-        setError("");
-        navigate('/signin')
-
+        form.resetFields();
+        navigate("/signin");
       } catch (error) {
-        setError(error.message)
+        showError(error.message);
+      } finally {
+        setLoading(false);
       }
-      form.resetFields();
     } else if (formState == "signin") {
       try {
         dispatch(signInStart());
         const res = await axios.post(
           `${apiUrl}/auth/signin`,
-           {email: value.email, password: value.password},
-          { withCredentials: true }
+          { email: value.email, password: value.password },
+          {
+            withCredentials: true,
+            validateStatus: (status) => status >= 200 && status < 500,
+          }
         );
         if (res.data.success == false) {
-          console.log("resp",res.data);
           dispatch(signInFailure(res.data.message));
+          return showError(res.data.message);
         }
         dispatch(signInSuccess(res.data));
         navigate("/");
       } catch (error) {
-        console.log(error);
         dispatch(signInFailure(error.message));
+        showError(error.message);
+      } finally {
+        setLoading(false);
       }
     }
   };
 
   return (
     <div className="max-w-md mx-auto p-8 bg-white shadow-lg rounded-md my-20">
-      <ToastContainer position="top-right" />
       <h2 className="text-2xl font-bold text-center mb-6 uppercase">
         {formState}
       </h2>
