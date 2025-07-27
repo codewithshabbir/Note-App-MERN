@@ -74,7 +74,7 @@ const Auth = ({ mode }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mx-4 lg:mx-auto p-18 bg-white shadow-xl rounded-2xl my-20 max-w-4xl">
+    <div className="flex flex-col md:flex-row mx-4 lg:mx-auto p-4 lg:p-18 bg-white shadow-xl rounded-2xl my-20 max-w-4xl">
       <div className="md:w-1/2 w-full flex items-center justify-center mb-8 md:mb-0">
         <img
           src="/signin.gif"
