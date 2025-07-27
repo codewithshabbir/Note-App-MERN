@@ -74,123 +74,134 @@ const Auth = ({ mode }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-8 bg-white shadow-lg rounded-md my-20">
-      <h2 className="text-2xl font-bold text-center mb-6 uppercase">
-        {formState}
-      </h2>
-      <Form
-        form={form}
-        name="signup"
-        onFinish={onFinish}
-        layout="vertical"
-        autoComplete="off"
-      >
-        {formState == "signup" && (
+    <div className="flex flex-col md:flex-row mx-4 lg:mx-auto p-18 bg-white shadow-xl rounded-2xl my-20 max-w-4xl">
+      <div className="md:w-1/2 w-full flex items-center justify-center mb-8 md:mb-0">
+        <img
+          src="/signin.gif"
+          alt="Signup Illustration"
+          className="w-72 h-auto"
+        />
+      </div>
+
+      <div className="md:w-1/2 w-full px-4">
+        <h2 className="text-3xl font-extrabold text-center text-[#1677ff] mb-6 uppercase tracking-wide">
+          {formState}
+        </h2>
+
+        <Form
+          form={form}
+          name="signup"
+          onFinish={onFinish}
+          layout="vertical"
+          autoComplete="off"
+        >
+          {formState === "signup" && (
+            <Form.Item
+              name="fullname"
+              label="Full Name"
+              rules={[
+                { required: true, message: "Please input your full name!" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Full Name"
+                className="py-2"
+              />
+            </Form.Item>
+          )}
+
           <Form.Item
-            name="fullname"
-            label="Full Name"
+            name="email"
+            label="Email"
             rules={[
-              { required: true, message: "Please input your full name!" },
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Please enter a valid email!" },
             ]}
           >
             <Input
-              prefix={<UserOutlined />}
-              placeholder="Full Name"
+              prefix={<MailOutlined />}
+              placeholder="Email"
               className="py-2"
             />
           </Form.Item>
-        )}
 
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[
-            { required: true, message: "Please input your email!" },
-            { type: "email", message: "Please enter a valid email!" },
-          ]}
-        >
-          <Input
-            prefix={<MailOutlined />}
-            placeholder="Email"
-            className="py-2"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="password"
-          label="Password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-          hasFeedback
-        >
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Password"
-            className="py-2"
-          />
-        </Form.Item>
-
-        {formState == "signup" && (
           <Form.Item
-            name="confirmPassword"
-            label="Confirm Password"
-            dependencies={["password"]}
+            name="password"
+            label="Password"
+            rules={[{ required: true, message: "Please input your password!" }]}
             hasFeedback
-            rules={[
-              { required: true, message: "Please confirm your password!" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject("Passwords do not match!");
-                },
-              }),
-            ]}
           >
             <Input.Password
               prefix={<LockOutlined />}
-              placeholder="Confirm Password"
+              placeholder="Password"
               className="py-2"
             />
           </Form.Item>
-        )}
 
-        <div className="text-sm flex pb-4 gap-2">
-          {formState === "signup" ? (
-            <p className="text-sm">
-              Already have an account?{" "}
-              <NavLink
-                to="/signin"
-                className="text-blue-600 font-semibold hover:underline"
-              >
-                Sign In
-              </NavLink>
-            </p>
-          ) : (
-            <p className="text-sm">
-              Don't have an account?{" "}
-              <NavLink
-                to="/signup"
-                className="text-blue-600 font-semibold hover:underline"
-              >
-                Sign Up
-              </NavLink>
-            </p>
+          {formState === "signup" && (
+            <Form.Item
+              name="confirmPassword"
+              label="Confirm Password"
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject("Passwords do not match!");
+                  },
+                }),
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Confirm Password"
+                className="py-2"
+              />
+            </Form.Item>
           )}
-        </div>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            className="bg-blue-600 hover:bg-blue-700"
-            loading={isLoading}
-          >
-            {formState}
-          </Button>
-        </Form.Item>
-      </Form>
+          <div className="text-sm flex justify-center pb-4 gap-1">
+            {formState === "signup" ? (
+              <p>
+                Already have an account?{" "}
+                <NavLink
+                  to="/signin"
+                  className="text-[#1677ff] font-semibold hover:underline"
+                >
+                  Sign In
+                </NavLink>
+              </p>
+            ) : (
+              <p>
+                Don’t have an account?{" "}
+                <NavLink
+                  to="/signup"
+                  className="text-[#1677ff] font-semibold hover:underline"
+                >
+                  Sign Up
+                </NavLink>
+              </p>
+            )}
+          </div>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              className="bg-[#1677ff] hover:bg-[#155bcc] py-2 text-white font-medium rounded-md"
+              loading={isLoading}
+            >
+              {formState}
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

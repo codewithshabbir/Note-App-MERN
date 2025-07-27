@@ -12,7 +12,7 @@ export const getProfileActions = (onLogout) => [
     label: (
       <NavLink
         to="/"
-        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-800 text-sm"
+        className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-800 text-sm"
       >
         <FaUser className="text-gray-500" />
         My Profile
@@ -24,7 +24,7 @@ export const getProfileActions = (onLogout) => [
     label: (
       <NavLink
         to="/"
-        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-800 text-sm"
+        className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-800 text-sm"
       >
         <FaEdit className="text-gray-500" />
         Edit Profile
@@ -36,7 +36,7 @@ export const getProfileActions = (onLogout) => [
     label: (
       <NavLink
         to="/"
-        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-800 text-sm"
+        className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-800 text-sm"
       >
         <FaCog className="text-gray-500" />
         Account Settings
@@ -48,7 +48,7 @@ export const getProfileActions = (onLogout) => [
     label: (
       <div
         onClick={onLogout}
-        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-800 text-sm"
+        className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-800 text-sm"
       >
         <FaSignOutAlt className="text-red-500" />
         Logout

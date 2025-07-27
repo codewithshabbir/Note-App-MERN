@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Modal, Input } from "antd";
 import axios from "axios";
+import { showError, showSuccess } from "../../utils/toast";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setIsModalOpen(showModal);
@@ -17,47 +20,39 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
   }, [showModal, noteData]);
 
   const handleOk = async () => {
-    if (type === "Add") {
-      console.log("add");
-      
-      try {
-        const res = await axios.post(
-          `${apiUrl}/note/add`,
-          { title, content },
-          { withCredentials: true }
-        );
-        
-        if (res.data.success === false) {
-          return res.data.message;
-        }
-        setTitle("");
-        setContent("");
-        getAllNotes();
-        onClose();
-        setIsModalOpen(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }else if (type === "Edit") {
-      console.log("edit");
+    if (!title.trim() || !content.trim()) {
+      return showError("Title and content are required.");
+    }
+    setLoading(true);
+    try {
+      const payload = { title, content };
+      let res;
 
-      try {
-        const res = await axios.post(
-          `${apiUrl}/note/edit/${noteData._id}`,
-          { title, content },
-          { withCredentials: true }
-        );
-        
-        if (res.data.success === false) {
-          return res.data.message;
-        }
-
-        getAllNotes();
-        onClose();
-        setIsModalOpen(false);
-      } catch (error) {
-        console.log(error.message);
+      if (type === "Add") {
+        res = await axios.post(`${apiUrl}/note/add`, payload, {
+          withCredentials: true,
+        });
+      } else if (type === "Edit") {
+        res = await axios.post(`${apiUrl}/note/edit/${noteData._id}`, payload, {
+          withCredentials: true,
+        });
       }
+
+      if (res.data.success === false) {
+        return showError(res.data.message);
+      }
+
+      showSuccess(`Note ${type === "Add" ? "Added" : "Updated"} successfully.`);
+
+      setTitle("");
+      setContent("");
+      getAllNotes();
+      onClose();
+      setIsModalOpen(false);
+    } catch (error) {
+      showError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,6 +79,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          confirmLoading={loading}
         >
           <div className="flex flex-col gap-4">
             <Input
@@ -105,6 +101,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          confirmLoading={loading}
         >
           <div className="flex flex-col gap-4">
             <Input
