@@ -51,14 +51,18 @@ export const signin = async (req, res, next) => {
     const { password: pass, ...userData } = validUser._doc;
     // const {password: pass, ...rest} = validUser;
 
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      success: true,
-      message: "Login Successfully",
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      userData,
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      })
+      .status(200)
+      .json({
+        success: true,
+        message: "Login Successfully",
+        userData,
+      });
   } catch (error) {
     next(error);
   }
@@ -66,13 +70,14 @@ export const signin = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
-    res.clearCookie("access_token");
-    res.status(200).json({
-      success: true,
-      message: "User Logged Out Successfully!",
+    res.clearCookie("access_token", {
       httpOnly: true,
       secure: true,
       sameSite: "None",
+    });
+    res.status(200).json({
+      success: true,
+      message: "User Logged Out Successfully!",
     });
   } catch (error) {
     next(error);
