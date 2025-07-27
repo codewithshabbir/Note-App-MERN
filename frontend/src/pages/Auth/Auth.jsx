@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
+console.log(apiUrl)
+
 const Auth = ({ mode }) => {
   const formState = mode == "Sign Up" ? "Sign Up" : "Sign In";
   const [isLoading, setLoading] = useState(false);
