@@ -54,6 +54,7 @@ export const signin = async (req, res, next) => {
     res.cookie("access_token", token, { httpOnly: true }).status(200).json({
       success: true,
       message: "Login Successfully",
+      httpOnly: true,
       secure: true,
       sameSite: "None",
       userData,
@@ -69,6 +70,9 @@ export const signOut = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User Logged Out Successfully!",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
   } catch (error) {
     next(error);
