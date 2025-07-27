@@ -53,7 +53,7 @@ const NoteCard = ({noteData, getAllNotes}) => {
         getAllNotes={getAllNotes}
       />
 
-      <div className="bg-white shadow-2xl rounded-lg p-6 space-y-4 border-b-2 border-blue-600">
+      <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border-b-2 border-blue-600">
         <div className="flex justify-between">
           <h2>{title}</h2>
           <ProfileDropdown

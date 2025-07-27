@@ -29,7 +29,7 @@ const Navbar = ({userInfo}) => {
     }
   };
   return (
-    <div className="flex justify-between px-12 py-4 bg-white">
+    <div className="flex justify-between px-4 lg:px-12 py-4 bg-white">
       <h2 className="flex items-center gap-1 text-2xl font-semibold text-gray-800">
         <FaRegStickyNote className="text-blue-600 text-2xl" />
         <span className="text-blue-600 font-bold">Note</span> Plus
