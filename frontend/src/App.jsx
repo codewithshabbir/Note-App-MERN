@@ -11,8 +11,8 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
         </Route>
-        <Route path="/signup" element={<Auth mode="Sign Up" />} />
-        <Route path="/signin" element={<Auth mode="Sign In" />} />
+        <Route path="/signup" element={<Auth mode="signup" />} />
+        <Route path="/signin" element={<Auth mode="signin" />} />
       </Routes>
     </BrowserRouter>
   );

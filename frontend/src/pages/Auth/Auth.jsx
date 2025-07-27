@@ -13,7 +13,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Auth = ({ mode }) => {
-  const formState = mode == "Sign Up" ? "Sign Up" : "Sign In";
+  const formState = mode == "signin" ? "signup" : "signin";
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [error, setError] = useState("")
@@ -22,7 +22,7 @@ const Auth = ({ mode }) => {
   const navigate = useNavigate();
 
   const onFinish = async (value) => {
-    if (formState == "Sign Up") {
+    if (formState == "signup") {
       try {
         const res = await axios.post(`${apiUrl}/auth/signup`,
           {username: value.fullname, email: value.email, password: value.password},
@@ -41,7 +41,7 @@ const Auth = ({ mode }) => {
         setError(error.message)
       }
       form.resetFields();
-    } else if (formState == "Sign In") {
+    } else if (formState == "signin") {
       try {
         dispatch(signInStart());
         const res = await axios.post(
@@ -75,7 +75,7 @@ const Auth = ({ mode }) => {
         layout="vertical"
         autoComplete="off"
       >
-        {formState == "Sign Up" && (
+        {formState == "signup" && (
           <Form.Item
             name="fullname"
             label="Full Name"
@@ -119,7 +119,7 @@ const Auth = ({ mode }) => {
           />
         </Form.Item>
 
-        {formState == "Sign Up" && (
+        {formState == "signup" && (
           <Form.Item
             name="confirmPassword"
             label="Confirm Password"
@@ -146,7 +146,7 @@ const Auth = ({ mode }) => {
         )}
 
         <div className="text-sm flex pb-4 gap-2">
-          {formState === "Sign Up" ? (
+          {formState === "signup" ? (
             <p className="text-sm">
               Already have an account?{" "}
               <NavLink
