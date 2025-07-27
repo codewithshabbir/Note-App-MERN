@@ -6,6 +6,7 @@ import { getProfileActions } from "../data/ProfileActions";
 import { useDispatch } from "react-redux";
 import { signInStart, signInSuccess, signOutFailure } from "../redux/user/userSlice";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Navbar = ({userInfo}) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Navbar = ({userInfo}) => {
   const onLogout = async () => {
     try {
       dispatch(signInStart());
-      const res = await axios.get("https://noteplus-backend.vercel.app/api/auth/signout",{
+      const res = await axios.get(`${apiUrl}/auth/signout`,{
         withCredentials: true,
       })
       if (res.data.success === false) {

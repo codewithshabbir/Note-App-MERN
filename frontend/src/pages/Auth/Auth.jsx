@@ -10,6 +10,7 @@ import {
   signInSuccess,
 } from "../../redux/user/userSlice";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Auth = ({ mode }) => {
   const formState = mode == "Sign Up" ? "Sign Up" : "Sign In";
@@ -23,7 +24,7 @@ const Auth = ({ mode }) => {
   const onFinish = async (value) => {
     if (formState == "Sign Up") {
       try {
-        const res = await axios.post("https://noteplus-backend.vercel.app/api/auth/signup",
+        const res = await axios.post(`${apiUrl}/auth/signup`,
           {username: value.fullname, email: value.email, password: value.password},
           {withCredentials: true}
         );
@@ -44,7 +45,7 @@ const Auth = ({ mode }) => {
       try {
         dispatch(signInStart());
         const res = await axios.post(
-          "https://noteplus-backend.vercel.app/api/auth/signin",
+          `${apiUrl}/auth/signin`,
            {email: value.email, password: value.password},
           { withCredentials: true }
         );

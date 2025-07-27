@@ -6,6 +6,8 @@ import { getNoteActions } from "../../data/NotesActions";
 import NoteModal from "../Modals/NoteModal";
 import { dateFormat } from "../../utils/helper";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const NoteCard = ({noteData, getAllNotes}) => {
   const {title, content, createdAt} = noteData;
@@ -29,7 +31,7 @@ const NoteCard = ({noteData, getAllNotes}) => {
     setNoteType("Edit")
   };
   const onDelete = async () => {
-    const res = await axios.delete(`https://noteplus-backend.vercel.app/api/note/delete/${noteData._id}`,
+    const res = await axios.delete(`${apiUrl}/note/delete/${noteData._id}`,
       { withCredentials: true }
     );
 

@@ -5,6 +5,7 @@ import NoteModal from "../../components/Modals/NoteModal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +27,7 @@ const Home = () => {
   // Get all notes from API
   const getAllNotes = async () => {
     try {
-      const res = await axios.get("https://noteplus-backend.vercel.app/api/note/all", {
+      const res = await axios.get(`${apiUrl}/note/all`, {
         withCredentials: true,
       });
 

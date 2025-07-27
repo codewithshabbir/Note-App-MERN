@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Modal, Input } from "antd";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +22,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
       
       try {
         const res = await axios.post(
-          "https://noteplus-backend.vercel.app/api/note/add",
+          `${apiUrl}/note/add`,
           { title, content },
           { withCredentials: true }
         );
@@ -42,7 +43,7 @@ const NoteModal = ({ showModal, onClose, type, getAllNotes, noteData }) => {
 
       try {
         const res = await axios.post(
-          `https://noteplus-backend.vercel.app/api/note/edit/${noteData._id}`,
+          `${apiUrl}/note/edit/${noteData._id}`,
           { title, content },
           { withCredentials: true }
         );
