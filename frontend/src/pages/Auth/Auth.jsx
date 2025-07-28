@@ -10,6 +10,8 @@ import {
 } from "../../redux/user/userSlice";
 import axios from "axios";
 import { showError } from "../../utils/toast";
+import AnimatedAntButton from "../../components/Buttons/AnimatedButton";
+import AnimatedButton from "../../components/Buttons/AnimatedButton";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Auth = ({ mode }) => {
@@ -190,15 +192,7 @@ const Auth = ({ mode }) => {
           </div>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              className="bg-[#1677ff] hover:bg-[#155bcc] py-2 text-white font-medium rounded-md"
-              loading={isLoading}
-            >
-              {formState}
-            </Button>
+            <AnimatedButton isLoading={isLoading} formState={formState}/>
           </Form.Item>
         </Form>
       </div>
