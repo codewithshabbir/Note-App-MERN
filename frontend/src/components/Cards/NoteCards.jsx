@@ -6,11 +6,11 @@ import { getNoteActions } from "../../data/NotesActions";
 import NoteModal from "../Modals/NoteModal";
 import { dateFormat } from "../../utils/helper";
 import axios from "axios";
+import { showError, showSuccess } from "../../utils/toast";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
-const NoteCard = ({noteData, getAllNotes}) => {
-  const {title, content, createdAt} = noteData;
+const NoteCard = ({ noteData, getAllNotes }) => {
+  const { title, content, createdAt } = noteData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [noteType, setNoteType] = useState(null);
@@ -21,19 +21,42 @@ const NoteCard = ({noteData, getAllNotes}) => {
   };
 
   // Action handlers
-  const onPin = () => console.log("Pin clicked");
-  const onView = () => {
-    setIsModalOpen(true);
-    setNoteType("View");    
-  };
-  const onEdit = () => {
-    setIsModalOpen(true);
-    setNoteType("Edit")
-  };
-  const onDelete = async () => {
-    const res = await axios.delete(`${apiUrl}/note/delete/${noteData._id}`,
+ const onPin = async () => {
+  try {
+    const res = await axios.put(
+      `${apiUrl}/note/update-note-pinned/${noteData._id}`,
+      { isPinned: !noteData.isPinned },
       { withCredentials: true }
     );
+
+    if (res.data.success === false) {
+      showError(res.data.message);
+      return;
+    }
+console.log(res.data);
+
+    showSuccess(`${res.data.note.isPinned ? res.data.note.title + " Pin Successfully": res.data.note.title + " Unpin Successfully"}`);
+    getAllNotes();
+  } catch (error) {
+    showError(error.message);
+  }
+};
+
+
+  const onView = () => {
+    setIsModalOpen(true);
+    setNoteType("View");
+  };
+
+  const onEdit = () => {
+    setIsModalOpen(true);
+    setNoteType("Edit");
+  };
+
+  const onDelete = async () => {
+    const res = await axios.delete(`${apiUrl}/note/delete/${noteData._id}`, {
+      withCredentials: true,
+    });
 
     if (res.data.success === false) {
       return res.data.message;
@@ -63,6 +86,7 @@ const NoteCard = ({noteData, getAllNotes}) => {
               onView,
               onEdit,
               onDelete,
+              isPinned: noteData.isPinned,
             })}
           />
         </div>

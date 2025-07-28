@@ -1,12 +1,13 @@
 import {
   FaEdit,
-  FaSignOutAlt,
   FaTrash,
   FaEye,
-  FaMapPin,
 } from "react-icons/fa";
+import { MdOutlinePushPin } from "react-icons/md";
+import { RiUnpinLine } from "react-icons/ri";
 
-export const getNoteActions = ({ onPin, onView, onEdit, onUpdate, onDelete }) => [
+
+export const getNoteActions = ({ onPin, onView, onEdit, onDelete, isPinned }) => [
   {
     key: "1",
     label: (
@@ -14,8 +15,13 @@ export const getNoteActions = ({ onPin, onView, onEdit, onUpdate, onDelete }) =>
         onClick={onPin}
         className="flex items-center gap-3 px-2 py-3 cursor-pointer text-gray-800 text-sm"
       >
-        <FaMapPin className="text-gray-500 rotate-45" />
-        Pin
+        {console.log(isPinned)}
+         {isPinned ? (
+        <RiUnpinLine className="text-gray-500" />
+      ) : (
+        <MdOutlinePushPin className="text-gray-500 rotate-45" />
+      )}
+      {isPinned ? "Unpin" : "Pin"}
       </div>
     ),
   },
